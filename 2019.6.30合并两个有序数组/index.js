@@ -11,6 +11,20 @@ const merge = function (nums1, m, nums2, n) {
     while (nums1[0] == 0 && nums1.length > m + n) {
         nums1.shift()
     }
-    return nums1;
+    return nums1
 }
 console.log(merge(nums1, m, nums2, n))
+
+
+var merge = function(nums1, m, nums2, n) {
+    nums1.splice(m, nums1.length-m)
+    nums2.slice(0, n).forEach(value => {
+        const index = nums1.findIndex(num => num > value)
+        
+        if(index < 0){
+          nums1.splice(nums1.length, 0, value)
+        } else {
+          nums1.splice(index, 0, value)
+        }
+    });
+};
