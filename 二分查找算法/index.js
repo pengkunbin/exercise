@@ -1,8 +1,8 @@
 const arry = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 const key = 11
 
-
-let binary_search = function (arry, key) {
+//非递归写法
+const binary_search = function (arry, key) {
     let mid = parseInt(arry.length / 2)
     let right = arry.length - 1
     let left = 0
@@ -18,6 +18,11 @@ let binary_search = function (arry, key) {
         }
     }
     return false
+}
+
+//递归写法
+const binary_search = function (arry, key, left, right) {
+    let mid = parseInt((left + right) / 2)
 }
 
 binary_search(arry, key)
