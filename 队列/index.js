@@ -1,26 +1,26 @@
-class Queue {
-    constructor() {
+class Queue{
+    constructor(){
         this.items = []
     }
-    enqueue(data) {
+    enqueue(data){
         this.items.push(data)
     }
-    dequeue() {
+    dequeue(){
         return this.items.shift()
     }
-    front() {
+    front(){
         return this.items[0]
     }
-    clear() {
+    clear(){
         this.items = []
     }
-    get size() {
+    get size(){
         return this.items.length
     }
-    get isEmpty() {
+    get isEmpty(){
         return !this.items.length
     }
-    print() {
+    print(){
         console.log(this.items.toString())
     }
 }
