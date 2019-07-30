@@ -12,7 +12,7 @@ class PriorityQueue {
         if (this.items) {
             for (let i in this.items) {
                 if (priority < this.items[i].priority) {
-                    this.items.splice(i - 1, 0, obj)
+                    this.items.splice(i, 0, obj)
                     flag = !flag
                     break
                 }
@@ -41,6 +41,7 @@ class PriorityQueue {
 }
 
 let demo = new PriorityQueue()
+demo.enqueue('a', 3)
 demo.enqueue('s', 5)
 demo.enqueue('k', 4)
 demo.enqueue('b', 6)
