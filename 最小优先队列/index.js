@@ -1,10 +1,6 @@
 class PriorityQueue {
-    constructor(element, priority) {
+    constructor() {
         this.items = []
-        this.obj = {
-            'element': element,
-            'priority': priority
-        }
     }
 
     enqueue(element, priority) {
