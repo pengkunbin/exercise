@@ -7,8 +7,9 @@ function newOperator(preobj, ...arg) {
     newOperator.target = preobj
 
     obj = Object.create(preobj.prototype)
-
+    console.log(arg)
     //get the parameters passed in
+    //or use arg
     const argsArr = [].slice.call(arguments, 1)
     //return value of the original function & binding this   
     const preobjReturnResult = preobj.apply(obj, argsArr)
