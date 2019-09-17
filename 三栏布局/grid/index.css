@@ -1,0 +1,29 @@
+.container {
+    position: relative;
+    display: grid;
+    grid-template-columns: 200px auto 200px;
+    grid-template-rows: 100%;
+    grid-template-areas: "lt cr rt"
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    height: 100vh
+}
+
+.center-wrap {
+    grid-area: cr;
+}
+
+.left-wrap {
+    grid-area: lt;
+    background: #1ba1e2;
+}
+
+.right-wrap {
+    grid-area: rt;
+    background: #1ba1e2;
+}
