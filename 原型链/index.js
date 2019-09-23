@@ -71,6 +71,7 @@ Object.defineproperty(Person.prototype, 'constructor', {
 
 
 // 依靠原型链的继承
+//包含引用类型的原型属性会被所有的实例共享
 function Father() {
     this.name = 'father'
 }
@@ -81,9 +82,29 @@ Father.prototype.getFatherName = function () {
 function Child() {
     this.name = 'child'
 }
+
 Child.prototype = new Father()
 Child.prototype.getChildName = function(){
     console.log(this.name)
 }
 
 const instance = new Child()
+
+//经典继承
+function Father(){
+    this.color = ['blue','red']
+}
+function Child(){
+    Father.call(this)
+}
+
+const instance1 = new Father()
+const instance2 = new Child()
+
+instance1.color.push('yellow')
+instance2.color.push('black')
+
+console.log(instance1.color)
+console.log(instance2.color)
+
+//组合式继承
