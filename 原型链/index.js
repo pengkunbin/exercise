@@ -68,6 +68,8 @@ Object.defineproperty(Person.prototype, 'constructor', {
     value: Person
 })
 
+
+
 // 依靠原型链的继承
 function Father() {
     this.name = 'father'
