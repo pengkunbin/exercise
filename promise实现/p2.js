@@ -1,6 +1,6 @@
 /**
  * 第二版
- * 处理无限调用then的问题
+ * 处理异步调用的问题
  * 创建两个
  * @param {callback} executor 
  */
@@ -42,9 +42,23 @@ Promise.prototype.then = function (callback) {
         this.rejectCallbacks.push(() => {
             callback(this.reason)
         })
-    } else if (this.state === 'fulfilled') {
+    } else if (this.states === 'fulfilled') {
         callback(this.value)
-    } else if (this.state === 'rejected') {
+    } else if (this.states === 'rejected') {
         callback(this.reason)
     }
 }
+
+let Iagree = new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve("我开心就同意了");
+    }, 1000)
+})
+
+Iagree.then((res) => {
+    console.log(res,Iagree.states)
+})
+
+Iagree.then((res) => {
+    console.log(Iagree.states + 1)
+})
