@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            background: #f7f7f7
+        }
+
+        @media only screen and(max-width: 700px) {
+            .model-content {
+                width: 100%
+            }
+        }
+
+        .root {
+            margin: 0 auto;
+            width: 1200px;
+            column-count: 5;
+            column-width: 240px;
+            column-gap: 20px;
+        }
+
+        .item {
+            margin-bottom: 10px;
+            break-inside: avoid;
+            background: #fff;
+        }
+
+        .item:hover {
+            box-shadow: 2px 2px 2px rgba(71, 70, 70, 0.5);
+        }
+
+        .itemImg {
+            width: 100%;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="root">
+        <div class="item">
+            <img class="itemImg" src="./img1.jpg" alt="">
+        </div>
+        <div class="item">
+            <img class="itemImg" src="./img2.jpg" alt="">
+        </div>
+        <div class="item">
+            <img class="itemImg" src="./img3.jpg" alt="">
+        </div>
+        <div class="item">
+            <img class="itemImg" src="./img4.jpg" alt="">
+        </div>
+        <div class="item">
+            <img class="itemImg" src="./img5.jpg" alt="">
+        </div>
+        <div class="item">
+            <img class="itemImg" src="./img6.jpg" alt="">
+        </div>
+        <div class="item">
+            <img class="itemImg" src="./img7.jpg" alt="">
+        </div>
+        <div class="item">
+            <img class="itemImg" src="./img8.jpg" alt="">
+        </div>
+        <div class="item">
+            <img class="itemImg" src="./img9.jpg" alt="">
+        </div>
+        <div class="item">
+            <img class="itemImg" src="./img10.jpg" alt="">
+        </div>
+
+
+        <div id="myModal" class="modal">
+            <span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+            <img class="modal-content" id="img01">
+        </div>
+
+    </div>
+</body>
+
+</html>1
