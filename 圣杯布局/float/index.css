@@ -1,0 +1,42 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+header,
+footer {
+    background: rgba(29, 27, 27, 0.726);
+    width: 100%;
+    height: 60px;
+}
+
+footer {
+    clear: both;
+}
+
+main {
+    width: 100%;
+}
+
+main div {
+    height: 300px;
+}
+
+.left {
+    float: left;
+    width: 200px;
+}
+
+.right {
+    float: right;
+    width: 200px;
+}
+
+.left,
+.right {
+    background: rgba(95, 179, 235, 0.972)
+}
+
+.container {
+    background: rgb(231, 105, 2)
+}
