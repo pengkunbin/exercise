@@ -84,17 +84,23 @@ function Child() {
 }
 
 Child.prototype = new Father()
-Child.prototype.getChildName = function(){
+Child.prototype.getChildName = function () {
     console.log(this.name)
 }
 
-const instance = new Child()
+const child = new Child()
+const father = new Father()
+
+Father.prototype.addFatherName = function () {
+    console.log(this.sayName + 'father')
+}
 
 //经典继承
-function Father(){
-    this.color = ['blue','red']
+function Father() {
+    this.color = ['blue', 'red']
 }
-function Child(){
+
+function Child() {
     Father.call(this)
 }
 
