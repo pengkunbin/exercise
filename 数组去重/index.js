@@ -1,8 +1,8 @@
 //数组去重
 
 //Set
-let arry = ['a', 'b', 'c', 'd']
-const handle = arr => [...new Set(array)]
+const arry = ['a', 'b', 'c', 'd', 'e', 'a']
+const handle = arr => [...new Set(arry)]
 
 //reduce
 const handle = array => array.reduce((accumulator, currentValue) => {
@@ -13,5 +13,5 @@ const handle = array => array.reduce((accumulator, currentValue) => {
 //filter
 const handle = array => {
     let map = new Map()
-    return array.filter(item => map.has(item) ? false : map.set(item))
+    return arry.filter(item => map.has(item) ? false : map.set(item))
 }
