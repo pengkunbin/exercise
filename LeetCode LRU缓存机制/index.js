@@ -4,9 +4,11 @@ const LRUCache = function (capacity) {
 }
 
 LRUCache.prototype.get = function (key) {
-    if (this.map.get(key)) {
+    const val = this.map.get(key)
+    if (val) {
         this.map.delete(key)
-        this.map.set(key, this.map.get(key))
+        this.map.set(key, val)
+        return val
     } else {
         return -1
     }
