@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .image-item {
+            display: block;
+            margin-bottom: 50px;
+            height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="" alt="" lazyload="true" data-original="./img1.jpg" class="image-item">
+    <img src="" alt="" lazyload="true" data-original="./img2.jpg" class="image-item">
+    <img src="" alt="" lazyload="true" data-original="./img3.jpg" class="image-item">
+    <img src="" alt="" lazyload="true" data-original="./img4.jpg" class="image-item">
+    <img src="" alt="" lazyload="true" data-original="./img5.jpg" class="image-item">
+    <img src="" alt="" lazyload="true" data-original="./img6.jpg" class="image-item">
+    <img src="" alt="" lazyload="true" data-original="./img7.jpg" class="image-item">
+    <img src="" alt="" lazyload="true" data-original="./img8.jpg" class="image-item">
+    <img src="" alt="" lazyload="true" data-original="./img9.jpg" class="image-item">
+    <img src="" alt="" lazyload="true" data-original="./img10.jpg" class="image-item">
+    <script>
+        const viewHeight = document.documentElement.clientHeight
+        const lazyload = function () {
+            const eles = document.querySelectorAll('img[data-original][lazyload]')
+            Array.prototype.forEach.call(eles, function (item, index) {
+                let react
+                if (item.dataset.original === '') {
+                    return
+                } else {
+                    rect = item.getBoundingClientRect()
+                    if (rect.bottom >= 0 && rect.top < viewHeight) {
+                        (function () {
+                            const img = new Image()
+                            img.src = item.dataset.original
+                            img.onload = function () {
+                                item.src = img.src
+                            }
+                            item.removeAttribute("data-original")
+                            item.removeAttribute("lazyload")
+                        })()
+                    }
+                }
+            })
+        }
+        lazyload()
+        document.addEventListener("scroll", lazyload)
+    </script>
+</body>
+
+</html>
