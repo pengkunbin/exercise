@@ -28,15 +28,15 @@
     <img src="" alt="" lazyload="true" data-original="./img10.jpg" class="image-item">
     <script>
         const viewHeight = document.documentElement.clientHeight
+        const eles = document.querySelectorAll('img[data-original][lazyload]')
         const lazyload = function () {
-            const eles = document.querySelectorAll('img[data-original][lazyload]')
             Array.prototype.forEach.call(eles, function (item, index) {
-                let react
-                if (item.dataset.original === '') {
+                if (!item.dataset.original) {
                     return
                 } else {
-                    rect = item.getBoundingClientRect()
+                    let rect = item.getBoundingClientRect()
                     if (rect.bottom >= 0 && rect.top < viewHeight) {
+
                         (function () {
                             const img = new Image()
                             img.src = item.dataset.original
@@ -46,6 +46,7 @@
                             item.removeAttribute("data-original")
                             item.removeAttribute("lazyload")
                         })()
+
                     }
                 }
             })
