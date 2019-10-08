@@ -1,12 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="./index.css">
+    <style>
+        .container {
+            position: relative;
+            display: grid;
+            grid-template-columns: 200px auto 200px;
+            grid-template-rows: 100%;
+            grid-template-areas: "lt cr rt"
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        div {
+            height: 100vh
+        }
+
+        .center-wrap {
+            grid-area: cr;
+        }
+
+        .left-wrap {
+            grid-area: lt;
+            background: #1ba1e2;
+        }
+
+        .right-wrap {
+            grid-area: rt;
+            background: #1ba1e2;
+        }
+    </style>
 </head>
+
 <body>
     <div class="container">
         <div class="left-wrap"></div>
@@ -14,4 +47,5 @@
         <div class="right-wrap"></div>
     </div>
 </body>
+
 </html>

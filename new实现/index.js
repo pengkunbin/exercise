@@ -2,7 +2,6 @@ const isComplexDataType = obj => (typeof obj === 'object' || typeof obj === 'fun
 
 const selfNew = function (object, ...args) {
     let instance = Object.create(object.prototype)
-    console.log('fn',instance)
     let result = object.apply(instance, args)
     return isComplexDataType(result) ? result : instance
 }
