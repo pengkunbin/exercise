@@ -3,6 +3,8 @@ class EventEmeitter {
         this._events = this._events || new Map()
         this._maxListeners = this._maxListeners || 10
     }
+
+    //触发
     emit(type, ...args) {
         let handler;
         handler = this._events.get(type)
@@ -23,6 +25,8 @@ class EventEmeitter {
         }
         return true
     }
+
+    //监听
     addListener(type, fn) {
         const handler = this._events.get(type); // 获取对应事件名称的函数清单
         if (!handler) {
@@ -34,6 +38,8 @@ class EventEmeitter {
             handler.push(fn); // 已经有多个监听者,那么直接往数组里push函数即可
         }
     }
+
+
     removeListener = function (type, fn) {
         const handler = this._events.get(type); // 获取对应事件名称的函数清单
 
@@ -63,3 +69,4 @@ class EventEmeitter {
             }
         }
     }
+}
