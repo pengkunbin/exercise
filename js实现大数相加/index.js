@@ -19,7 +19,7 @@ const bigNumber = function (a, b) {
             temp = number1 + number2 + 1
             flag = false
         } else {
-            if(!number1 &&!number2){
+            if (!number1 && !number2) {
                 return res
             }
             temp = number1 + number2
