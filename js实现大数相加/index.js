@@ -10,8 +10,8 @@ const bigNumber = function (a, b) {
     let res = '',
         temp = 0,
         flag = false
-    a = a.toString().split('')
-    b = b.toString().split('')
+    a = a.split('')
+    b = b.split('')
     while (a.length || b.length || temp) {
         let number1 = isValue(a.pop())
         let number2 = isValue(b.pop())
@@ -19,9 +19,6 @@ const bigNumber = function (a, b) {
             temp = number1 + number2 + 1
             flag = false
         } else {
-            if (!number1 && !number2) {
-                return res
-            }
             temp = number1 + number2
         }
         if (temp > 10) {
@@ -31,7 +28,8 @@ const bigNumber = function (a, b) {
             res = temp + res
         }
     }
-    return res
+    const result =  res.substring(1)
+    return result
 }
 
-bigNumber(9953512345687, 85)
+bigNumber('3782647863278468012934670', '23784678091370408971329048718239749083')
