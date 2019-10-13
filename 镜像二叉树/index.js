@@ -40,5 +40,6 @@ function ismirrorTree(lRoot, rRoot) {
     }
     return ismirrorTree(lRoot.left, rRoot.right) && ismirrorTree(lRoot.right, rRoot.left)
 }
+
 const result = mirrorTree(tree)
 console.log(result)

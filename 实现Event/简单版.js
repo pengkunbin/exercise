@@ -26,7 +26,7 @@ class EventEmeitter {
         return true
     }
 
-    //监听
+    //创建函数
     addListener(type, fn) {
         const handler = this._events.get(type); // 获取对应事件名称的函数清单
         if (!handler) {
@@ -39,7 +39,7 @@ class EventEmeitter {
         }
     }
 
-
+    //移除监听
     removeListener = function (type, fn) {
         const handler = this._events.get(type); // 获取对应事件名称的函数清单
 
