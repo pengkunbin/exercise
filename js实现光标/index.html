@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .terminal {
+            background: black;
+            width: 400px;
+            height: 500px;
+            margin: 0 auto;
+        }
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .cursor {
+            margin: 0;
+            width: 2px;
+            background-color: #fff;
+            animation: blink 1s step-end infinite;
+            margin-left: 5px;
+            -webkit-animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                visibility: hidden;
+            }
+        }
+
+        @-webkit-keyframes blink {
+            50% {
+                visibility: hidden;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="terminal">
+        <div class="cursor">&nbsp;</div>
+    </div>
+</body>
+
+</html>

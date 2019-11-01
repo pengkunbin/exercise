@@ -7,7 +7,7 @@ const promiseAll = function (queue) {
             const size = queue.length
             let arry = new Array(size)
             for (let i = 0; i < size; i++) {
-                // (function (i) {
+                (function (i) {
                     Promise.resolve(queue[i]).then(res => {
                         count++
                         arry[i] = res
@@ -17,7 +17,7 @@ const promiseAll = function (queue) {
                     }, function (reason) {
                         return reject(reason)
                     })
-                // })(i)
+                })(i)
             }
         }
     })
