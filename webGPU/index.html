@@ -1,0 +1,32 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Canvas Test</title>
+    <script type="text/javascript" src="hello.js"></script>
+    <script id="library" type="x-shader/x-metal">
+        #include <metal_stdlib>
+        using namespace metal;
+        struct Vertex
+        {
+            float4 position [[position]];
+            float4 color;
+        };
+        vertex Vertex vertex_main(device Vertex *vertices [[buffer(0)]],
+                                  uint vid [[vertex_id]])
+        {
+            return vertices[vid];
+        }
+        fragment float4 fragment_main(Vertex inVertex [[stage_in]])
+        {
+            return inVertex.color;
+        }
+    </script>
+</head>
+
+<body>
+    <canvas id="canvas" width="256" height="256"></canvas>
+</body>
+
+</html>
