@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>web虚拟键盘</title>
+</head>
+
+<body>
+    <input type="text" id="text" onchange="debug()">
+    <button onclick="_key('A')" class="key">A</button>
+    <button onclick="_key('B')" class="key">B</button>
+    <script>
+        const text = document.getElementById('text')
+        const key = document.getElementsByClassName('key')
+        let index = 0
+        text.addEventListener('mouseup', function () {
+            index = text.selectionStart
+            console.log('text:', text.selectionStart, text.selectionEnd)
+        })
+
+        for (item of key) {
+            item.addEventListener('mouseup', function () {
+                index = text.selectionStart
+                console.log('key', text.selectionStart, text.selectionEnd)
+            })
+        }
+
+        const debug = function debug() {
+            console.log(text.selectionStart, text.selectionEnd)
+        }
+
+        const _key = function _key(str) {
+            const textStr = text.value
+            switch (str) {
+                case 'A':
+                    console.log('A:', index)
+                    text.value = textStr.slice(0, index) + 'A' + textStr.slice(index)
+                    text.focus()
+                    text.selectionEnd = text.selectionStart = index + 1
+                    break
+                case 'B':
+                    console.log('B:', index)
+                    text.value = textStr.slice(0, index) + 'B' + textStr.slice(index)
+                    text.focus()
+                    text.selectionEnd = text.selectionStart = index + 1
+                    break
+            }
+        }
+    </script>
+</body>
+
+</html>
