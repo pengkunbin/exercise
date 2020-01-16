@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>四角边框</title>
+    <style>
+        .square{
+            position: relative;
+            width: 500px;
+            height: 500px;
+            border: 2px gray solid;
+            border-radius: 10px;
+        }
+        .top-left{
+            position: absolute;
+            display: block;
+            top: -2px;
+            left: -2px;
+            width: 50px;
+            height: 50px;
+            border-left: 2px solid red;
+            border-top: 2px solid red;
+            border-top-left-radius: 10px;
+        }
+        .bottom-left{
+            position: absolute;
+            display: block;
+            bottom: -2px;
+            left: -2px;
+            width: 50px;
+            height: 50px;
+            border-left: 2px solid red;
+            border-bottom: 2px solid red;
+            border-bottom-left-radius: 10px;
+        }
+        .top-right{
+            position: absolute;
+            display: block;
+            top: -2px;
+            right: -2px;
+            width: 50px;
+            height: 50px;
+            border-right: 2px solid red;
+            border-top: 2px solid red;
+            border-top-right-radius: 10px;
+        }
+        .bottom-right{
+            position: absolute;
+            display: block;
+            bottom: -2px;
+            right: -2px;
+            width: 50px;
+            height: 50px;
+            border-right: 2px solid red;
+            border-bottom: 2px solid red;
+            border-bottom-right-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="square">
+        <div class="top-left"></div>
+        <div class="bottom-left"></div>
+        <div class="top-right"></div>
+        <div class="bottom-right"></div>
+    </div>
+</body>
+</html>
