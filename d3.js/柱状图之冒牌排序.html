@@ -37,7 +37,7 @@
         //画布周边的空白
         var padding = { left: 30, right: 30, top: 20, bottom: 20 };
         //定义一个数组
-        var dataset = [10, 20, 30, 40, 33, 24, 12, 5, 60, 12, 80, 9];
+        var dataset = [10, 20, 30, 40, 33, 24, 12, 5, 100, 420, 120, 9];
         var svg = d3.select('body').append('svg').attr('width', width).attr('height', height);
         //V4版本-start
         var xScale = d3.scaleBand()
@@ -84,6 +84,11 @@
             .attr('class', 'axis').attr("transform", "translate(" + padding.left + "," + (height - padding.bottom) + ")").call(d3.axisBottom(xScale));//d3.axisBottom(xScale)  --V4版本
         svg.append('g')
             .attr('class', 'axis').attr("transform", "translate(" + padding.left + "," + padding.top + ")").call(d3.axisLeft(yScale));//d3.axisLeft(yScale) --V4版本
+    
+    
+        async function bubbleSort(arr){
+            
+        }
     </script>
 </body>
 
