@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>柱状图之冒泡排序</title>
+    <style>
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+
+        .MyText {
+            fill: white;
+            text-anchor: middle;
+        }
+
+        .tooltip {
+            position: absolute;
+            width: 100px;
+            height: auto;
+            font-size: 14px;
+            text-align: center;
+            border: 1px solid #666;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script>
+        const width = 800;
+        const height = 500;
+        const rectWidth = 4;
+        //画布周边的空白
+        const padding = { left: 30, right: 30, top: 20, bottom: 20 };
+        //定义一个数组
+        let data = [10, 20, 30, 40, 33, 24, 12, 5, 40, 30, 70, 9];
+
+        const svg = d3.select('body').append('svg').attr('width', width).attr('height', height);
+
+        const render = function render(dataset) {
+            const tooltip = d3.select("body")
+                .append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0)
+            //V4版本-start
+            const xScale = d3.scaleBand()
+                .domain(d3.range(0, dataset.length))
+                .range([0, width - padding.left - padding.right]);
+            //V4版本-end
+            const yScale = d3.scaleLinear()//V4版本
+                .domain([0, d3.max(dataset)])
+                .range([height - padding.bottom - padding.top, 0]);
+
+            const rects = svg.selectAll('MyRect')
+                .data(dataset)
+                .enter()
+                .append('rect')
+                .attr('class', 'MyRect')
+                .attr("transform", "translate(" + padding.left + "," + padding.top + ")")
+                .attr('x', function (d, i) {
+                    return xScale(i) + rectWidth / 2;
+                })
+                .attr('y', function (d, i) {
+                    return yScale(d);
+                })
+                .attr('width', xScale.bandwidth() - rectWidth)
+                .attr('height', function (d, i) {
+                    return height - padding.bottom - padding.top - yScale(d);
+                })
+                .attr('fill', 'steelblue')
+                .on("mousemove", function (d) {
+                    d3.select(this).attr("fill", "#5d95d4")
+                    tooltip.html('num: ' + d)
+                        .style("left", d3.event.pageX + 10 + "px")
+                        .style("top", d3.event.pageY + 10 + "px")
+                        .style("opacity", 1)
+                })
+                .on("mouseout", function () {
+                    d3.select(this).attr("fill", "steelblue")
+                    tooltip.style("opacity", 0)
+                })
+                .on("click", function (d) {
+                    console.log(d)
+                })
+
+            const texts = svg.selectAll('MyText')
+                .data(dataset)
+                .enter()
+                .append('text')
+                .attr('class', 'MyText')
+                .attr("transform", "translate(" + padding.left + "," + padding.top + ")")
+                .attr('x', function (d, i) {
+                    return xScale(i) + rectWidth / 2;
+                })
+                .attr('y', function (d, i) {
+                    return yScale(d);
+                })
+                .attr('dx', function () {
+                    return (xScale.bandwidth() - rectWidth) / 2;//V4版本
+                })
+                .attr('dy', function () {
+                    return 20;
+                })
+                .text(function (d) {
+                    return d;
+                });
+
+
+            svg.append('g')
+                .attr('class', 'axis').attr("transform", "translate(" + padding.left + "," + (height - padding.bottom) + ")").call(d3.axisBottom(xScale));      //d3.axisBottom(xScale)  --V4版本
+            svg.append('g')
+                .attr('class', 'axis').attr("transform", "translate(" + padding.left + "," + padding.top + ")").call(d3.axisLeft(yScale));                      //d3.axisLeft(yScale) --V4版本
+
+        }
+
+        render(data)
+
+        function wait(seconds) {
+            return new Promise((res) => {
+                setTimeout(res, seconds);
+            });
+        }
+
+        async function bubbleSort() {
+            for (let i = 0; i < data.length; i++) {
+                for (let j = 0; j < data.length - i - 1; j++) {
+                    if (data[j] > data[j + 1]) {
+                        [data[j], data[j + 1]] = [data[j + 1], data[j]]
+                    }
+                    await wait(500)
+                    svg.html("")
+                    render(data)
+                    d3.select(`.MyRect:nth-child(${i + 1})`).attr("fill", "#39b08a") // 绿色    
+                    d3.select(`.MyRect:nth-child(${j + 1})`).attr("fill", "#81c9e3") // 天蓝色
+                    d3.select(`.MyRect:nth-child(${j + 2})`).attr("fill", "#5492f7") // 海蓝色
+                }
+            }
+        }
+
+        bubbleSort()
+    </script>
+</body>
+
+</html>
