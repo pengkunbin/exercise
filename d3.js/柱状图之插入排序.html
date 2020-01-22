@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>柱状图之冒泡排序</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>柱状图之插入排序</title>
     <style>
         .axis path,
         .axis line {
@@ -44,12 +46,14 @@
         //画布周边的空白
         const padding = { left: 30, right: 30, top: 20, bottom: 20 };
         //定义一个数组
-        let data = [10, 20, 30, 40, 33, 24, 12, 5, 40, 30, 70, 9];
+        let data = [10, 20, 27, 40, 33, 24, 12, 5, 45, 30, 70, 9, 15, 25];
 
+        const svg = d3.select('body').append('svg').attr('width', width).attr('height', height);
         const tooltip = d3.select("body")
             .append("div")
             .attr("class", "tooltip")
             .style("opacity", 0)
+
         //V4版本-start
         const xScale = d3.scaleBand()
             .domain(d3.range(0, data.length))
@@ -59,13 +63,10 @@
             .domain([0, d3.max(data)])
             .range([height - padding.bottom - padding.top, 0]);
 
-        const svg = d3.select('body').append('svg').attr('width', width).attr('height', height);
-
-        const color = ['#39b08a', '#81c9e3', '#5492f7']
-        const colortext = ['没有特殊含义，可暂时认为是轮数的标识','每轮中互相比较的前项数字','每轮中互相比较的后项数字']
+        const color = ['#81c9e3', '#b2e0dd', '#39b08a']
+        const colortext = ['每轮中比较的较小数', '每轮中比较的较大数', '每轮中的最后一个数字']
 
         const render = function render(dataset) {
-
             const detail = svg.append("g")
             const crect = detail
                 .selectAll("g")
@@ -75,7 +76,7 @@
                 .attr("width", 15)
                 .attr("height", 15)
                 .attr('y', function (d, i) {
-                    return (i+1) * 20
+                    return (i + 1) * 20
                 })
                 .attr('x', function (d, i) {
                     return 50
@@ -91,7 +92,7 @@
                 .attr("width", 10)
                 .attr("height", 10)
                 .attr('y', function (d, i) {
-                    return (i+1.6) * 20
+                    return (i + 1.6) * 20
                 })
                 .attr('x', function (d, i) {
                     return 70
@@ -99,8 +100,7 @@
                 .text(function (d, i) {
                     return d
                 })
-                .attr('font-size',10)
-
+                .attr('font-size', 10)
             const rects = svg.selectAll('MyRect')
                 .data(dataset)
                 .enter()
@@ -138,6 +138,7 @@
                 .enter()
                 .append('text')
                 .attr('class', 'MyText')
+                .attr('font-size', 16)
                 .attr("transform", "translate(" + padding.left + "," + padding.top + ")")
                 .attr('x', function (d, i) {
                     return xScale(i) + rectWidth / 2;
@@ -160,7 +161,6 @@
                 .attr('class', 'axis').attr("transform", "translate(" + padding.left + "," + (height - padding.bottom) + ")").call(d3.axisBottom(xScale));      //d3.axisBottom(xScale)  --V4版本
             svg.append('g')
                 .attr('class', 'axis').attr("transform", "translate(" + padding.left + "," + padding.top + ")").call(d3.axisLeft(yScale));                      //d3.axisLeft(yScale) --V4版本
-
         }
 
         render(data)
@@ -171,23 +171,25 @@
             });
         }
 
-        async function bubbleSort() {
-            for (let i = 0; i < data.length; i++) {
-                for (let j = 0; j < data.length - i - 1; j++) {
-                    if (data[j] > data[j + 1]) {
-                        [data[j], data[j + 1]] = [data[j + 1], data[j]]
-                    }
+        async function InsertionSort() {
+            for (let i = 1; i < data.length; i++) {
+                let key = data[i];
+                let j = i - 1;
+                while (j >= 0 && data[j] > key) {
+                    data[j + 1] = data[j];
                     await wait(500)
                     svg.html("")
                     render(data)
-                    d3.select(`.MyRect:nth-child(${i + 2})`).attr("fill", "#39b08a") // 绿色    
-                    d3.select(`.MyRect:nth-child(${j + 1})`).attr("fill", "#81c9e3") // 天蓝色
-                    d3.select(`.MyRect:nth-child(${j + 2})`).attr("fill", "#5492f7") // 海蓝色
+                    d3.select(`.MyRect:nth-child(${i + 1})`).attr("fill", "#39b08a") // 绿色    每轮中的待更新数字
+                    d3.select(`.MyRect:nth-child(${j + 1})`).attr("fill", "#b2e0dd")  //浅绿色 每轮中不断更新的最小数字
+                    d3.select(`.MyRect:nth-child(${j + 2})`).attr("fill", "#81c9e3") // 天蓝色  在循环中寻找最小的数字
+                    j--;
                 }
+                data[j + 1] = key;
             }
         }
 
-        bubbleSort()
+        InsertionSort()
     </script>
 </body>
 
