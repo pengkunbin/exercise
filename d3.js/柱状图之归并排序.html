@@ -3,9 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>柱状图插入排序 二分</title>
+    <title>柱状图之归并排序</title>
     <style>
         .axis path,
         .axis line {
@@ -46,7 +44,7 @@
         //画布周边的空白
         const padding = { left: 30, right: 30, top: 20, bottom: 20 };
         //定义一个数组
-        let data = [10, 20, 30, 40, 33, 24, 12, 5, 40, 30, 70, 9, 37, 55, 65, 35, 40];
+        let data = [10, 20, 30, 40, 33, 24, 12, 5, 40, 30, 70, 9];
 
         const tooltip = d3.select("body")
             .append("div")
@@ -63,8 +61,8 @@
 
         const svg = d3.select('body').append('svg').attr('width', width).attr('height', height);
 
-        const color = ['#39b08a', '#81c9e3', '#5492f7', '#e75863', '#c1391b']
-        const colortext = ['每轮中比较的较小数', '每轮中比较的较大数', '每轮中的最后一个数字', '二分的左边界', '二分的右边界']
+        const color = ['#81c9e3', '#5492f7']
+        const colortext = ['每轮中互相比较的前项数字', '每轮中互相比较的后项数字(前项数字加增量，增量每轮递减)']
 
         const render = function render(dataset) {
 
@@ -173,38 +171,39 @@
             });
         }
 
-        async function binaryInsertionSort() {
-            for (let i = 1; i < data.length; i++) {
-                let key = data[i], left = 0, right = i - 1;
-                while (left <= right) {
-                    const middle = parseInt((left + right) / 2);
-                    if (key < data[middle]) {
-                        right = middle - 1;
-                    } else {
-                        left = middle + 1;
-                    }
-                    await wait(1000)
-                    svg.html("")
-                    render(data)
-                    d3.select(`.MyRect:nth-child(${left + 1})`).attr("fill", "#e75863")  //浅红色
-                    d3.select(`.MyRect:nth-child(${right + 1})`).attr("fill", "#c1391b") //深红色
+        async function MergeSort() {
+            function mergeSort(arr) {  //采用自上而下的递归方法
+                const len = arr.length;
+                if (len < 2) {
+                    return arr;
                 }
-                for (var j = i - 1; j >= left; j--) {
-                    data[j + 1] = data[j];
-                    await wait(800)
-                    svg.html("")
-                    render(data)
-                    d3.select(`.MyRect:nth-child(${i + 1})`).attr("fill", "#39b08a") // 绿色    
-                    d3.select(`.MyRect:nth-child(${j + 1})`).attr("fill", "#81c9e3") // 天蓝色
-                    d3.select(`.MyRect:nth-child(${j + 2})`).attr("fill", "#5492f7") // 海蓝色
-                    d3.select(`.MyRect:nth-child(${left + 1})`).attr("fill", "#e75863")  //浅红色
-                    d3.select(`.MyRect:nth-child(${right + 1})`).attr("fill", "#c1391b") //深红色
-                }
-                data[left] = key;
+                const middle = Math.floor(len / 2),
+                    left = arr.slice(0, middle),
+                    right = arr.slice(middle);
+                return merge(mergeSort(left), mergeSort(right));
             }
+
+            function merge(left, right) {
+                let result = [];
+                while (left.length && right.length) {
+                    if (left[0] <= right[0]) {
+                        result.push(left.shift());
+                    } else {
+                        result.push(right.shift());
+                    }
+                }
+
+                while (left.length)
+                    result.push(left.shift());
+
+                while (right.length)
+                    result.push(right.shift());
+                return result;
+            }
+            mergeSort(data)
         }
 
-        binaryInsertionSort()
+        MergeSort()
     </script>
 </body>
 
