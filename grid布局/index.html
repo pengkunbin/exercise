@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .grid-box {
+            display: grid;
+            grid-template-columns: 300px 100px;
+            grid-template-rows: 100px 300px;
+            grid-template-areas: "a b" "a c";
+        }
+
+        .green {
+            grid-area: a;
+            background-color: green;
+            width: 300px;
+            height: 800px;
+        }
+
+        .red {
+            grid-area: b;
+            background-color: red;
+            width: 100px;
+            height: 100px;
+        }
+
+        .blue {
+            grid-area: c;
+            background-color: blue;
+            width: 100px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="grid-box">
+            <div class="green">
+
+            </div>
+            <div class="red">
+
+            </div>
+            <div class="blue">
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
