@@ -27,5 +27,3 @@ const s1 = SingleDog.getInstance()
 const s2 = SingleDog.getInstance()
 
 s1 === s2
-
-
