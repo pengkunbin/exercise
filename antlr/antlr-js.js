@@ -14,6 +14,7 @@ h3 {
    color: @color;
 }
 `;
+
 const chars = new antlr4.InputStream(input);
 const lexer = new MyGrammarLexer(chars);
 const tokens = new antlr4.CommonTokenStream(lexer);
