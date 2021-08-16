@@ -12,3 +12,5 @@ const throttle = (fn, delay = 500) => {
         }
     }
 }
+
+console.log('hello world')
