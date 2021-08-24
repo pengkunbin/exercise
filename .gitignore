@@ -1,3 +1,4 @@
 logs/*
 node_modules/
 webpack-demo/node_modules
+.idea/
