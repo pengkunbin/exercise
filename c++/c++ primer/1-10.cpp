@@ -2,10 +2,10 @@
 
 int main(){
     int sum = 0;
-    int i = 50;
-    while(i <= 100){
+    int i = 10;
+    while(i >= 0){
         sum = sum + i;
-        i = i + 1;
+        i = i - 1;
     }
     std::cout << sum << std::endl;
 }
