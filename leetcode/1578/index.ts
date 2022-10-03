@@ -1,18 +1,16 @@
+function sum(arr: number[]) {
+    return arr.reduce(function (prev: number, curr: number) {
+        return prev + curr;
+    }, 0);
+}
+
 // 算花费的时间
 function getTimes(neededTime: number[], timestart: number, count: number): number {
     const filterTime = neededTime.slice(timestart, timestart + count)
-    // console.log("🚀 ~ file: index.ts ~ line 4 ~ getTimes ~ filterTime", filterTime)
+    // console.log("filterTime", filterTime, count)
     const maxTime = Math.max(...filterTime);
-    let times = 0;
-    let flag = false;
-    filterTime.forEach(time => {
-        if (time !== maxTime || flag) {
-            times = times + time;
-        } else {
-            flag = true
-        }
-    })
-    return times;
+    const sumTime = sum(filterTime);
+    return sumTime - maxTime;
 }
 
 function minCost(colors: string, neededTime: number[]): number {
@@ -21,6 +19,16 @@ function minCost(colors: string, neededTime: number[]): number {
     let times = 0;
 
     for (let i = 1; i < colors.length; i++) {
+        // console.log("count", count, colors[i - 1], colors[i], timestart, i)
+
+        // 如果已经有连续的叠加数，说明前方有连续字母
+        if ((count > 1 && colors[i - 1] !== colors[i]) || i === colors.length - 1) {
+            if (colors[i - 1] !== colors[i]) {
+                times = getTimes(neededTime, timestart, count) + times;
+            } else {
+                times = getTimes(neededTime, timestart, count + 1) + times;
+            }
+        }
 
         // 如果后一个数不等于前一个数
         if (colors[i - 1] !== colors[i]) {
@@ -31,16 +39,13 @@ function minCost(colors: string, neededTime: number[]): number {
         } else {
             count = count + 1;
         }
-        // console.log("count", count, i, colors[i - 1], colors[i])
 
-        // 如果已经有连续的叠加数，说明前方有连续字母
-        if (count > 1) {
-            times = getTimes(neededTime, timestart, count) + times;
-        }
+
+        // console.log("count", count, i, colors[i - 1], colors[i])
     }
-    console.log("times", times)
+    // console.log("times", times)
 
     return times;
 };
 
-minCost('bbbaaa', [4, 9, 3, 8, 8, 9])
+minCost('abaac', [1, 2, 3, 4, 5])
