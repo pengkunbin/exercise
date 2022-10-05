@@ -6,5 +6,6 @@ int main()
   for (; std::cin >> value;)
   {
     sum = sum + value;
+    std::cout << sum << std::endl;
   }
 }
