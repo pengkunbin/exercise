@@ -1,6 +1,5 @@
 function threeSum(nums: number[]): number[][] {
     const result: number[][] = [];
-    // 拿到数组的长度
     let n = nums.length;
     nums.sort((a, b) => a - b);
 
