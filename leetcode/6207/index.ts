@@ -14,3 +14,6 @@ function countSubarrays(nums: number[], minK: number, maxK: number): number {
     const maxIndex = nums.findIndex(num=>num === maxK);
     return 0;
 };
+
+
+
