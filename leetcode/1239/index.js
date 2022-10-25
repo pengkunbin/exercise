@@ -1,37 +1,42 @@
-var maxLength1 = function(arr) {
-    let ans = 0;
-    const masks = [];
-    for (const s of arr) {
-        let mask = 0;
-        for (let i = 0; i < s.length; ++i) {
-            const ch = s[i].charCodeAt() - 'a'.charCodeAt();
-            if (((mask >> ch) & 1) !== 0) { // 若 mask 已有 ch，则说明 s 含有重复字母，无法构成可行解
-                mask = 0;
-                break;
+var maxLength = function(arr) {
+    const length = arr.length;
+    if(length === 1) {
+        return arr[0].length;
+    }
+    let maxWordLength = 0;
+
+    const dfs = function(path, index) {
+        maxWordLength = Math.max(maxWordLength, path.join('').length);
+
+        for(let i = index; i < length; i++) {
+            const currentStr = path.join('');
+            if(isContain(currentStr, arr[i])) {
+                continue;
             }
-            mask |= 1 << ch; // 将 ch 加入 mask 中
-        }
-        if (mask > 0) {
-            masks.push(mask);
+            path.push(arr[i]);
+            dfs(path, i + 1);
+            path.pop();
         }
     }
 
-    console.log("maxLength:", masks)
-
-
-    const backtrack = (masks, pos, mask) => {
-        // console.log("masks, pos, mask", masks, pos, mask, mask.toString(2))
-        if (pos === masks.length) {
-            ans = Math.max(ans, mask.toString(2).split('0').join('').length);
-            return;
+    const isContain = function(str1, str2) {
+        const set = new Set(str1.split(''));
+        const set2 = new Set(str2.split(''));
+        if(set2.size < str2.length) {
+            return true;
         }
-        if ((mask & masks[pos]) === 0) { // mask 和 masks[pos] 无公共元素
-            backtrack(masks, pos + 1, mask | masks[pos]);
+        for(let i = 0; i < str2.length; i++) {
+            if(set.has(str2[i])) {
+                return true;
+            }
         }
-        backtrack(masks, pos + 1, mask);
+
+        return false;
     }
 
-    backtrack(masks, 0, 0);
-    return ans;
+    dfs([], 0)
+
+    return maxWordLength;
 };
-console.log("maxLength:", maxLength(["un","iq","ue"]))
+
+console.log("maxLength:", maxLength(["cha","r","act","ers"]))
