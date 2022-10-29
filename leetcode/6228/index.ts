@@ -1,12 +1,12 @@
 function isSimalier(querie: string, dic: string): boolean {
     let temp = 0;
     for (let i = 0; i < querie.length; i++) {
-        if (temp === querie.length - 2) {
-            return true;
-        }
-
         if (querie[i] === dic[i]) {
             temp++;
+        }
+
+        if (temp === querie.length - 2) {
+            return true;
         }
     }
     return false;
@@ -25,9 +25,8 @@ function twoEditWords(queries: string[], dictionary: string[]): string[] {
         for (let j = 0; j < dictionary.length; j++) {
             const dictionarystring = dictionary[j]
             if (isSimalier(queriestring, dictionarystring)) {
-                if (ans.findIndex(ele => ele === queriestring) !== -1) {
-                    ans.push(queriestring)
-                }
+                ans.push(queriestring);
+                break;
             }
         }
     }
@@ -38,3 +37,4 @@ function twoEditWords(queries: string[], dictionary: string[]): string[] {
 
 
 
+console.log("twoEditWords", twoEditWords(['word', 'note', 'wood', 'ants'], ['wood', 'wood', 'joke', 'moat']))
