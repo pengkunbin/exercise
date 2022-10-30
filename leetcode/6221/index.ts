@@ -1,3 +1,4 @@
+/** 模拟题，初始化的时候没做好 */
 function mostPopularCreator(creators: string[], ids: string[], views: number[]): string[][] {
     const map: any = {};
     for (let i = 0; i < creators.length; i++) {
