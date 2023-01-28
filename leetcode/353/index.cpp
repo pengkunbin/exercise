@@ -43,7 +43,6 @@ public:
             }
             else
             {
-                // 情况五
                 intervals.emplace(val, val);
             }
         }
