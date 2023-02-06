@@ -1,6 +1,8 @@
 {
     "git.ignoreLimitWarning": true,
     "files.associations": {
-        "vector": "cpp"
+        "vector": "cpp",
+        "__config": "cpp",
+        "__nullptr": "cpp"
     }
 }
