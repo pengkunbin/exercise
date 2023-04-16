@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>船舶计算</title>
+</head>
+
+<body>
+    <h1>船舶计算</h1>
+    <h2>船体要素</h2>
+    <form>
+        <p>
+            <label for="L">船长(L)：</label>
+            <input type="number" id="L" step="0.01" value="134.1" required>
+        </p>
+        <p>
+            <label for="H">船宽(H)：</label>
+            <input type="number" id="H" step="0.01" value="15.4" required>
+        </p>
+        <p>
+            <label for="D">吃水(D)：</label>
+            <input type="number" id="D" step="0.01" value="4.21" required>
+        </p>
+        <p>
+            <label for="CB">方形系数(CB)：</label>
+            <input type="number" id="CB" step="0.01" value="0.4256" required>
+        </p>
+        <h2>舵要素</h2>
+        <p>
+            <label for="AR">舵面积(AR)：</label>
+            <input type="number" id="AR" step="0.01" value="7.29" required>
+        </p>
+        <p>
+            <label for="HR">舵高(HR)：</label>
+            <input type="number" id="HR" step="0.01" value="3.27" required>
+        </p>
+        <p>
+            <label for="ZXB">展弦比(ZXB)：</label>
+            <input type="number" id="ZXB" step="0.01" value="1.47" required>
+        </p>
+        <h2>桨要素</h2>
+        <p>
+            <label for="DP">螺旋桨直径(DP)：</label>
+            <input type="number" id="DP" step="0.01" value="3.8" required>
+        </p>
+        <p>
+            <label for="YP">双桨间距(YP)：</label>
+            <input type="number" id="YP" step="0.01" value="4.98" required>
+        </p>
+        <h2>其他参数</h2>
+        <p>
+            <label for="CI">横流阻尼系数(CI)：</label>
+            <input type="number" id="CI" step="0.01" value="1.19907" required>
+        </p>
+        <p>
+            <label for="CT">桨倒车系柱拉力系数(CT)：</label>
+            <input type="number" id="CT" step="0.01" value="0.025" required>
+        </p>
+        <p>
+            <label for="SCTZ">侧推器到重心的距离(SCTZ)：</label>
+            <input type="number" id="SCTZ" step="0.01" value="60" required>
+        </p>
+        <p>
+            <label for="SJZ">舵到重心的距离(SJZ)：</label>
+            <input type="number" id="SJZ" step="0.01" value="63" required>
+        </p>
+        <p>
+            <label for="ROU">海水密度(ROU)：</label>
+            <input type="number" id="ROU" step="0.01" value="1" required>
+        </p>
+        <h1>可操纵数据</h1>
+        <p>
+            <label for="V">横移速度（V）：</label>
+            <input type="number" id="V" name="V" step="0.01" value="0.6" required><br>
+        </p>
+        <p>
+            <label for="YCT">侧推力（YCT）：</label>
+            <input type="number" id="YCT" name="YCT" step="0.01" value="10" required><br>
+        </p>
+        <p>
+            <label for="DJD">舵角度（DJD）：</label>
+            <input type="number" id="DJD" name="DJD" step="0.01" value="35" required><br>
+        </p>
+        <input type="button" value="计算" onclick="calculate()">
+        <h2>输出</h1>
+            <h3>进车螺旋桨桨角:</h3>
+            <div id="RJJJ"></div>
+            <h3>倒车螺旋桨桨角:</h3>
+            <div id="RDJJ"></div>
+    </form>
+    <script>
+        function degToRad(degrees) {
+            return degrees * (Math.PI / 180);
+        }
+
+        function calculate() {
+            // 获取表单中的值
+            const CI = parseFloat(document.getElementById('CI').value);
+            const CB = parseFloat(document.getElementById('CB').value);
+            const H = parseFloat(document.getElementById('H').value);
+            const D = parseFloat(document.getElementById('D').value);
+            const ROU = parseFloat(document.getElementById('ROU').value);
+            const L = parseFloat(document.getElementById('L').value);
+            const V = parseFloat(document.getElementById('V').value);
+            const AR = parseFloat(document.getElementById('AR').value);
+            const DJD = parseFloat(document.getElementById('DJD').value);
+            const DP = parseFloat(document.getElementById('DP').value);
+            const HR = parseFloat(document.getElementById('HR').value);
+            const YP = parseFloat(document.getElementById('YP').value);
+            const ZXB = parseFloat(document.getElementById('ZXB').value);
+            const CT = parseFloat(document.getElementById('CT').value);
+            // 进行计算
+            const CUR = 0.7 * DP / HR;
+            // 计算横流阻尼系数
+            const C = CI - 0.3466478 * CB - 0.3363621 * CB * CB - 0.04538 * H / D;
+
+            // 计算横流阻尼力
+            const YZ = C * 0.5 * ROU * L * D * V * V;
+
+            // 用于验证推力系数
+            const TLXS = 0.24828 - 0.07083 * Math.sqrt(L / D + CB) + 4.49423 * CB * (D / L) * (D / L);
+
+            // 侧推器到重心的距离
+            const SCTZ = 60;
+
+            // 舵到重心的距离
+            const SJZ = 63;
+            console.log("🚀 ~ file: ship-calculation.html:129 ~ calculate ~ SJZ:", SJZ)
+
+            const pi = Math.PI;
+            // 初始化 FN 的近似解
+            function solveEquation() {
+                let FN, YCT;
+                for (FN = 0; FN <= 100; FN += 0.01) { // 使用数值方法求解方程
+                    for (YCT = 0; YCT <= 100; YCT += 0.01) {
+                        const left = (FN * (2.25 + ZXB) / (6.13 * ZXB) ** 2 / AR / Math.sin(DJD) * pi * DP * DP / 8 / CUR / CUR - FN * Math.sin(DJD)) * YP - YCT * SCTZ + FN * Math.sin(DJD) * YP / 2 + FN * Math.cos(DJD) * SJZ;
+                        const right = YCT + FN * Math.cos(DJD) - YZ;
+                        if (Math.abs(left - right) < 0.001) { // 判断是否满足精度要求
+                            return [FN, YCT];
+                        }
+                    }
+                }
+                return []; // 如果没有找到解，则返回 null
+            }
+
+            const [FN, YCT] = solveEquation();
+            console.log(`FN = ${FN}, YCT = ${YCT}`);
+            console.log("🚀 ~ file: ship-calculation.html:156 ~ calculate ~ FN:", FN, YCT)
+
+
+            const TPA = FN * (2.25 + ZXB) / (6.13 * ZXB) * 2 / AR / Math.sin(DJD * (Math.PI / 180)) * Math.PI * DP * DP / 8 / CUR / CUR;
+            const XR = FN * Math.sin(DJD * (Math.PI / 180));
+            const YR = FN * Math.cos(DJD * (Math.PI / 180));
+            const TPB = TPA - XR;
+            const N = Math.sqrt(TPA * 8 / (0.49 * Math.PI * CT * ROU * Math.pow(Math.PI, 3) * Math.pow(DP, 4)));
+            const JJJ = 36.2 * (N * 60 / 235.7);
+            const n = Math.sqrt(TPB * 8 / (0.49 * Math.PI * CT * ROU * Math.pow(Math.PI, 3) * Math.pow(DP, 4)));
+            console.log("🚀 ", N, TPB, CT, ROU, DP)
+            const DJJ = 52.2 * (n * 60 / 235.7);
+            const YZG = -(YCT + YR - YZ);
+
+            console.log("FN = " + FN.toFixed(2));
+            console.log("TPA = " + TPA.toFixed(2));
+            console.log("XR = " + XR.toFixed(2));
+            console.log("YR = " + YR.toFixed(2));
+            console.log("TPB = " + TPB.toFixed(2));
+            console.log("N = " + N.toFixed(2));
+            console.log("JJJ = " + JJJ.toFixed(2));
+            console.log("n = " + n);
+            console.log("DJJ = " + DJJ);
+            console.log("YZG = " + YZG.toFixed(2));
+
+            // 获取两个 div 元素
+            var div1 = document.getElementById('RJJJ');
+            var div2 = document.getElementById('RDJJ');
+
+            // 给两个 div 元素赋值
+            div1.innerHTML = JJJ;
+            div2.innerHTML = DJJ;
+        }
+    </script>
+</body>
