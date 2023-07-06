@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>hello world</h1>
+  <h2>xpath</h2>
+  <h3>hhh</h3>
+</body>
+<script>
+  const tooltip = createTooltip('');
+  document.body.appendChild(tooltip);
+  let preTarget = null;
+  let preTargetBg = '';
+  document.addEventListener('mousemove', event => {
+    const target = event.target;
+    if (target.nodeName === 'HTML' || target.nodeName === 'BODY') {
+      return;
+    }
+
+    if(!preTarget) {
+      preTarget = target;
+    } else if (preTarget !== target){
+      preTarget.style.background = preTargetBg;
+      preTarget = target;
+      preTargetBg = target.style.background;
+    }
+
+    target.style.background = '#a3bfe0'
+
+    var xpath = getXPath(target);
+    tooltip.style.left = event.pageX + 20 + 'px';
+    tooltip.style.top = event.pageY + 20 + 'px';
+    tooltip.textContent = xpath;
+    console.log('XPath:', xpath);
+  });
+
+  function createTooltip(xpath) {
+    const tooltip = document.createElement('div');
+    tooltip.classList.add('xpath-tooltip');
+    tooltip.style.border = '1px solid #000'
+    tooltip.style.background = '#fff';
+    tooltip.style.padding = '10px'
+    tooltip.style.position = 'absolute';
+    tooltip.style.left = '-9999px';
+    tooltip.style.top = '-9999px';
+    tooltip.textContent = xpath;
+    return tooltip;
+  }
+
+  function getXPath(element) {
+    var xpath = '';
+    while (element && element.nodeType === Node.ELEMENT_NODE) {
+      var tagName = element.tagName.toLowerCase();
+      var index = 1;
+      var siblings = element.parentNode.children;
+      for (var i = 0; i < siblings.length; i++) {
+        var sibling = siblings[i];
+        if (sibling === element) {
+          break;
+        }
+
+        if (sibling.tagName.toLowerCase() === tagName) {
+          index++;
+        }
+      }
+      xpath = '/' + tagName + '[' + index + ']' + xpath;
+      element = element.parentNode;
+    }
+    return xpath;
+  }
+</script>
+
+</html>
