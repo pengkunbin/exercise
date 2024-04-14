@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "canvas": "^2.11.2",
-    "echarts": "^5.5.0"
+    "echarts": "^5.5.0",
+    "jimp": "^0.22.12"
   }
 }

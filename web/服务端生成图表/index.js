@@ -1,8 +1,9 @@
 const echarts = require('echarts');
 const { createCanvas } = require('canvas');
 const fs = require("fs");
+const jimp = require('jimp');
 
-const canvas = createCanvas(800, 600);
+const canvas = createCanvas(1000, 300);
 // ECharts 可以直接使用 node-canvas 创建的 Canvas 实例作为容器
 let chart = echarts.init(canvas);
 
@@ -10,27 +11,28 @@ const option = {
   xAxis: {
     show: false,
     type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun', 'Sun1', 'Sun2', 'Sun3', 'Sun4', 'Sun5']
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
   },
   yAxis: {
     show: false,
-    type: 'value'
+    type: 'value',
+    min: 200,
   },
   series: [
     {
-      data: [820, 830, 840, 922, 982, 962, 962, 952, 942, 932, 901, 820],
+      data: [220, 230, 252, 262, 252, 230, 220],
       type: 'line',
       smooth: true,
       showSymbol: false,
-      symbol: "circle", // 这个把节点的空心圆换成实心圆
+      symbol: "circle",
       lineStyle:{
         width: 8,
         color: '#3D67FF',
         cap: 'round',
       },
-      areaStyle: {
-        color: '#dae6fd'
-      }
+      // areaStyle: {
+      //   color: '#dae6fd'
+      // }
     },
   ]
 };
@@ -40,6 +42,8 @@ chart.setOption(option);
 
 const buffer = canvas.toBuffer('image/png');
 
-fs.writeFile('./example.png', buffer, ()=>{});
-
+fs.writeFileSync('./example.png', buffer);
+jimp.read("./example.png").then((image)=>{
+  image.autocrop().writeAsync('./example_autoCrop.png');
+});
 //TODO: 解决图片模糊的问题
