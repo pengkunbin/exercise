@@ -21,20 +21,27 @@
 
 function lengthOfLIS(nums: number[]): number {
 
-    let max = 1;
-    for(let i = 0; i < nums.length; i++) {
-        const temps: number[] = [nums[i]];
-        for(let j = i; j < nums.length; j++){
-            if(nums[j] > temps[temps.length - 1]){
-                temps.push(nums[j]);
+    let maxSequence = [nums[0]];
+    for(let i = 1; i < nums.length; i++) {
+        if(nums[i] > maxSequence[maxSequence.length - 1]){
+            maxSequence.push(nums[i]);
+            continue;
+        }
+
+        let left = 0;
+        let right = maxSequence.length - 1;
+        while(left < right){
+            let mid = Math.floor((left + right) / 2);
+            if(maxSequence[mid] < nums[i]){
+                left = mid + 1;
+            }else{
+                right = mid;
             }
         }
-        console.log("🚀 ~ lengthOfLIS ~ temps:", temps)
-
-        max = Math.max(max, temps.length);
+        maxSequence[left] = nums[i];
     }
     
-    return max;
+    return maxSequence.length;
 }
 
 lengthOfLIS([0,1,0,3,2,3])
